@@ -25,34 +25,30 @@ public class CountListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        System.out.println("test");
         if (event.getChannel().getIdLong() != channelId) return;
-        System.out.println("test2");
+        User author = event.getAuthor();
 
         try {
-            User author = event.getAuthor();
-
             FunctionX f_x = new FunctionX(event.getMessage().getContentRaw());
-            if (count + 1 != f_x.getF_xo(0) && author == lastSender) {
+            if (count + 1 != f_x.getF_xo(0) || author == lastSender) {
                 count = 0;
-                event.getMessage().addReaction(Emoji.fromUnicode("❌"));
-                event.getChannel().sendMessage(InsultAPI.getRoast(author));
+                event.getMessage().addReaction(Emoji.fromUnicode("❌")).submit();
+                event.getChannel().sendMessage(InsultAPI.getRoast(author)).submit();
                 Scoreboard.addFail(author);
                 return;
             }
+        } catch (CalculatorException ignore) {}
 
-            count++;
+        count++;
             lastSender = author;
             Scoreboard.addCount(author);
 
             if (count > highScore) {
                 highScore = count;
-                event.getMessage().addReaction(Emoji.fromUnicode("\uD83C\uDF1F"));
+                event.getMessage().addReaction(Emoji.fromUnicode("\uD83C\uDF1F")).submit();
             } else {
-                event.getMessage().addReaction(Emoji.fromUnicode("✅"));
+                event.getMessage().addReaction(Emoji.fromUnicode("✅")).submit();
             }
-
-        } catch (CalculatorException ignore) {}
     }
 
     @Override
