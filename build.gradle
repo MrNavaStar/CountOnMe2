@@ -1,0 +1,34 @@
+plugins {
+    id "java"
+    id 'application'
+}
+
+group "me.mrnavastar"
+version "1.0"
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    // Bot
+    implementation("com.github.sbesada:java.math.expression.parser:v3.3.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("net.dv8tion:JDA:5.0.0-beta.2") {
+        exclude module: "opus-java"
+    }
+}
+
+application {
+    mainClass = 'me.mrnavastar.countonme2.Main'
+}
+
+
+
+/*
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.mrnavastar.countonme2.Main'
+    }
+}*/

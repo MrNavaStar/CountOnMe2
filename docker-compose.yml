@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  bot:
+    image: count-on-me-2:latest
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=OTM2ODUxNjM2ODMwMjI0NDE0.G4mfCp.CCLWZIpNIj3oo_VDt3ctwjdIXt0gFvg8tWkIIM
+    #volumes:
+    #  - /path:/app/data
