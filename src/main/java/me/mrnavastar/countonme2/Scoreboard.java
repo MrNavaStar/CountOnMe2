@@ -2,6 +2,7 @@ package me.mrnavastar.countonme2;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.entities.EmbedType;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -15,7 +16,7 @@ import java.util.*;
 
 public class Scoreboard {
 
-    private static HashMap<String, PlayerData> scoreboard = new HashMap<>();
+    private static final HashMap<String, PlayerData> scoreboard = new HashMap<>();
     private static final File scoreboardData = new File("data/scoreboard.json");
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -30,9 +31,8 @@ public class Scoreboard {
         if (!scoreboardData.exists()) save();
 
         try {
-            FileReader reader = new FileReader(scoreboardData);
-            scoreboard = gson.fromJson(reader, HashMap.class);
-            reader.close();
+            JsonObject data = gson.fromJson(new FileReader(scoreboardData), JsonObject.class);
+            data.keySet().forEach(key -> scoreboard.put(key, gson.fromJson(data.get(key), PlayerData.class)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +57,7 @@ public class Scoreboard {
 
         int count = 1;
         StringBuilder message = new StringBuilder();
-        message.append("# Name Fails\n");
+        message.append("## Number Of Fails\n");
         for (Map.Entry<String, PlayerData> entry : players) {
             PlayerData playerData = entry.getValue();
 

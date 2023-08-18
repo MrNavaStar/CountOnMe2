@@ -26,7 +26,7 @@ public class CountListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         User author = event.getAuthor();
-        if (event.getChannel().getIdLong() != channelId || (author.isBot() && author.getName().equals("CountOnMe"))) return;
+        if (event.getChannel().getIdLong() != channelId || (author.isBot())) return;
 
         try {
             FunctionX f_x = new FunctionX(event.getMessage().getContentRaw());

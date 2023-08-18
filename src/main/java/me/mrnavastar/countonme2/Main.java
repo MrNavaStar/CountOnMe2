@@ -38,7 +38,7 @@ public class Main {
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_CHANNEL)),
             Commands.slash("highscore", "Shows the highest count record"),
             Commands.slash("scoreboard", "Shows the count scoreboard")
-        ).queue();
+        ).submit();
     }
 
     public static User getUser(String userId) {
